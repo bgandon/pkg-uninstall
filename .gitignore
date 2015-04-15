@@ -1,0 +1,10 @@
+/dist/
+
+# Eclipse files
+/.buildpath
+/.project
+/.settings
+.*.md.html
+
+# Emacs files
+*~
