@@ -26,7 +26,7 @@ pkgutil() {
 
     [ ${#lines[@]} -eq 1 ]
     [ "${lines[0]}" == "Would: pkgutil --forget com.example.plop.Pkg.ID" ]
-    [ "$status" -eq 0 ]
+    [ $status -eq 0 ]
 }
 
 @test "should forget package" {
@@ -44,7 +44,7 @@ pkgutil() {
     [ "${args[1]}" == com.example.plop.Pkg.ID ]
 
     [ -z "$output" ]
-    [ "$status" -eq 0 ]
+    [ $status -eq 0 ]
 }
 
 # Local Variables:

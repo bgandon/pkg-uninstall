@@ -11,11 +11,13 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | does_exist)
+    run does_exist <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "1\n1\n0")" ]
+    [ "$output" == "$(echo -e "1\n1\n0")" ]
+    [ $status -eq 0 ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F1" "$L2_F2"
@@ -27,11 +29,13 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | does_exist)
+    run does_exist <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "1\n0\n1")" ]
+    [ "$output" == "$(echo -e "1\n0\n1")" ]
+    [ $status -eq 0 ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F1" "$L2_F3"
@@ -43,11 +47,13 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | does_exist)
+    run does_exist <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "0\n1\n0")" ]
+    [ "$output" == "$(echo -e "0\n1\n0")" ]
+    [ $status -eq 0 ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F2"
@@ -59,11 +65,13 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | does_exist)
+    run does_exist <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "0\n0\n1")" ]
+    [ "$output" == "$(echo -e "0\n0\n1")" ]
+    [ $status -eq 0 ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F3"

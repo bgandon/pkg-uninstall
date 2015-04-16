@@ -37,9 +37,9 @@ list_non_existing() {
     run_with_muted_stdout validate_prefix_directory com.example.pkg.id /pfx/dir
 
     # Then:
-    [[ "$output" =~ 'Missing directories:' ]]
-    [[ "$output" =~ 'Missing files:' ]]
-    [ $status -eq 1 ]
+    [[ "$output" =~ 'Missing directories:' ]] && true || false
+    [[ "$output" =~ 'Missing files:' ]] && true || false
+    [ $status -ne 0 ]
 }
 
 @test "should be quiet on stderr when not verbose" {
@@ -52,7 +52,7 @@ list_non_existing() {
 
     # Then:
     [ -z "$output" ]
-    [ $status -eq 1 ]
+    [ $status -ne 0 ]
 }
 
 @test "should return KO when not validating dirs" {
@@ -64,9 +64,9 @@ list_non_existing() {
     run_with_muted_stdout validate_prefix_directory com.example.pkg.id /pfx/dir
 
     # Then:
-    [[ ! "$output" =~ 'Missing directories:' ]]
-    [[ "$output" =~ 'Missing files:' ]]
-    [ $status -eq 1 ]
+    [[ ! "$output" =~ 'Missing directories:' ]] && true || false
+    [[ "$output" =~ 'Missing files:' ]] && true || false
+    [ $status -ne 0 ]
 }
 
 @test "should return KO when not validating files" {
@@ -78,9 +78,10 @@ list_non_existing() {
     run_with_muted_stdout validate_prefix_directory com.example.pkg.id /pfx/dir
 
     # Then:
-    [[ "$output" =~ 'Missing directories:' ]]
-    [[ ! "$output" =~ 'Missing files:' ]]
-    [ $status -eq 1 ]
+    echo_actual_output
+    [[ "$output" =~ 'Missing directories:' ]] && true || false
+    [[ ! "$output" =~ 'Missing files:' ]] && true || false
+    [ $status -ne 0 ]
 }
 
 @test "should return OK when validating files" {

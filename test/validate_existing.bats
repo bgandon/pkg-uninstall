@@ -6,34 +6,34 @@ load test-data
 load test-helpers
 
 
-@test "should return KO when facing many non-existing files" {
+@test "should fail when facing many missing files" {
     # When:
     run validate_existing files with: 5 out-of: 100
 
     # Then:
-    [ $status -eq 1 ]
+    [ $status -ne 0 ]
 }
 
-@test "should return KO when facing many few files" {
+@test "should fail when facing few missing files" {
     # When:
     run validate_existing files with: 99 out-of: 100
 
     # Then:
-    [ $status -eq 1 ]
+    [ $status -ne 0 ]
 }
 
-@test "should tell the user about the issue, and advise of what can be done" {
+@test "should fail when facing missing files, tell the user about the issue, and advise of what can be done" {
     # When:
     run validate_existing files with: 0 out-of: 1
 
     # Then:
-    [[ "$output" =~ 'cannot be found' ]]
-    [[ "$output" =~ 'use --verbose to list' ]]
-    [[ "$output" =~ 'use --force to uninstall' ]]
-    [ $status -eq 1 ]
+    [[ "$output" =~ 'cannot be found' ]] && true || false
+    [[ "$output" =~ 'use --verbose to list' ]] && true || false
+    [[ "$output" =~ 'use --force to uninstall' ]] && true || false
+    [ $status -ne 0 ]
 }
 
-@test "should return OK when files are present" {
+@test "should succeed in case no files are missing" {
     # When:
     run validate_existing files with: 10 out-of: 10
 

@@ -11,11 +11,12 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | retain_non_existing)
+    run retain_non_existing <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "$L2_F3")" ]
+    [ "$output" == "$(echo -e "$L2_F3")" ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F1" "$L2_F2"
@@ -27,11 +28,12 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | retain_non_existing)
+    run retain_non_existing <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "$L2_F2")" ]
+    [ "$output" == "$(echo -e "$L2_F2")" ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F1" "$L2_F3"
@@ -43,11 +45,12 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | retain_non_existing)
+    run retain_non_existing <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "${L2_F1}\n${L2_F3}")" ]
+    [ "$output" == "$(echo -e "${L2_F1}\n${L2_F3}")" ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F2"
@@ -59,11 +62,12 @@ load test-helpers
     cd "$tmp_dir"
 
     # When:
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | retain_non_existing)
+    run retain_non_existing <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
 
     # Then:
-    [ "$result" == "$(echo -e "${L2_F1}\n${L2_F2}")" ]
+    [ "$output" == "$(echo -e "${L2_F1}\n${L2_F2}")" ]
 
     # Cleanup:
     rm_tmp "$tmp_dir" "$L2_F3"

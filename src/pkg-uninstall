@@ -85,10 +85,10 @@ while [ $treat_args = yes ]; do
     esac
 done
 
-if ! assert_all_packages_are_installed "$@"; then
+if ! are_all_packages_installed "$@"; then
     exit 1
 fi
-if ! assert_can_infer_prefix_dirs_if_necessary "$@"; then
+if ! can_infer_prefix_dirs_if_necessary "$@"; then
     exit 1
 fi
 

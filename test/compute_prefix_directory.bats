@@ -7,10 +7,8 @@ load test-helpers
 load test-mocks
 
 # Mock
-pkgutil() {
-    mocks_save_args "$@"
-    echo volume: /plop-vol
-}
+load mocks/pkgutil--pkg-info
+
 #Mock
 infer_prefix_returns=some-prefix
 infer_prefix() {
@@ -22,6 +20,7 @@ infer_prefix() {
         return 0
     fi
 }
+
 # Mock
 defaults_returns=prefix-without-blanks
 defaults() {
@@ -62,7 +61,7 @@ defaults() {
 
     # Then:
     mocks_fetch_args
-    [[ ${#args[@]} -eq 1 ]]
+    [ ${#args[@]} -eq 1 ]
     [ "${args[0]}" == com.example.plop.Pkg.ID ]
 
     echo actual output: "$output" >&2
@@ -84,7 +83,7 @@ defaults() {
 
     # Then:
     mocks_fetch_args
-    [[ ${#args[@]} -eq 1 ]]
+    [ ${#args[@]} -eq 1 ]
     [ "${args[0]}" == com.example.plop.Pkg.ID ]
 
     [ "$output" == /inferred/pfx/dir ]
@@ -107,7 +106,7 @@ defaults() {
 
     # Then:
     mocks_fetch_args
-    [[ ${#args[@]} -eq 5 ]]
+    [ ${#args[@]} -eq 5 ]
     # when calling 'pkgutil'
     [ "${args[0]}" == --pkg-info ]
     [ "${args[1]}" == com.example.plop.Pkg.ID ]

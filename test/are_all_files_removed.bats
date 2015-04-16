@@ -7,7 +7,7 @@ load test-helpers
 load test-mocks
 
 # Mock
-load mock-list
+load mocks/list
 
 @test "should return KO when a file is still there" {
     # Given:
@@ -63,8 +63,8 @@ load mock-list
 
     # Then:
     [ ${#lines[@]} -eq 2 ]
-    [[ "${lines[0]}" =~ "could not remove file '$L1_F2'" ]]
-    [[ "${lines[1]}" =~ "could not remove file '$L1_F1'" ]]
+    [[ "${lines[0]}" =~ $(echo "could not remove file '.*/${L1_F2}'") ]] && true || false
+    [[ "${lines[1]}" =~ $(echo "could not remove file '.*/${L1_F3}'") ]] && true || false
     [ $status -ne 0 ]
 
     # Cleanup:

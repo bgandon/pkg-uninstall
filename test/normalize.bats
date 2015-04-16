@@ -5,23 +5,25 @@ load ../src/functions
 load test-data
 
 @test "should not affect correct paths when normalizing" {
-    result=$(echo -e "$FILES_WITH_BLANKS" \
-                    | normalize '>')
-    [ "$result" == "$(echo -e "$FILES_WITH_BLANKS")" ]
+    # When:
+    run normalize <<EOF
+$(echo -e "$FILES_WITH_BLANKS")
+EOF
+
+    # Then:
+    [ "$output" == "$(echo -e "$FILES_WITH_BLANKS")" ]
+    [ $status -eq 0 ]
 }
 
 @test "should contract multiple directory separators when normalizing" {
-    result=$(echo -e "$FILES_WITH_MULTIPLE_DIR_SEPS" \
-                    | normalize '>')
-#   echo expected: >&2
-#   cat -t >&2 <<EOF
-#$(echo -e "$FILES_WITH_BLANKS")
-#EOF
-#   echo actual: >&2
-#   cat -t >&2 <<EOF
-#$result
-#EOF
-    [ "$result" == "$(echo -e "$FILES_WITH_SINGLE_DIR_SEPS")" ]
+    # When:
+    run normalize <<EOF
+$(echo -e "$FILES_WITH_MULTIPLE_DIR_SEPS")
+EOF
+
+    # Then:
+    [ "$output" == "$(echo -e "$FILES_WITH_SINGLE_DIR_SEPS")" ]
+    [ $status -eq 0 ]
 }
 
 # Local Variables:

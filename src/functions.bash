@@ -11,17 +11,12 @@ retain_dirs_with_min_path_elems() {
         | perl -0 -ne 'chomp; print "$_\n" if scalar(split(/\/+/, $_)) >= '"$min_path_elems"
 }
 
-shell_string_escape() {
-    # Backslashes \ are escaped by backslashes \\
-    sed -e 's/\\/\\\\/g'
-}
-
 sed_escape() {
+    # Backslashes \ are escaped by backslashes \\
     # Forward slashes / are escaped by backslashes \/
     # Dots . and stars * are escaped by backslashes: \. and \*
     # Square brackets [ and ] are escaped by backslashes \[ and \]
-    shell_string_escape \
-        | sed -e 's/\//\\\//g; s/\([.*]\)/\\\1/g; s/\[/\\[/g; s/\]/\\]/g'
+    sed -e 's/\\/\\\\/g; s/\//\\\//g; s/\([.*]\)/\\\1/g; s/\[/\\[/g; s/\]/\\]/g'
 }
 
 prepend_string() {
@@ -62,11 +57,12 @@ retain_non_existing() {
 # DOMAIN SPECIFIC FUNCTIONS #
 # ------------------------- #
 
-assert_all_packages_are_installed() {
+are_all_packages_installed() {
     local any_missing_package=no
     for pkg in "$@"; do
         if ! pkgutil --pkg-info "$pkg" > /dev/null 2>&1; then
-            echo "$SELF: package '$pkg' is not installed. Please run 'pkgutil --pkgs' to review installed packages. Aborting." >&2
+            echo "$SELF: package '$pkg' is not installed. Please run 'pkgutil --pkgs' to review installed packages." \
+                 "Aborting." >&2
             any_missing_package=yes
         fi
     done
@@ -92,7 +88,7 @@ can_infer_prefix() {
     return 0
 }
 
-assert_can_infer_prefix_dirs_if_necessary() {
+can_infer_prefix_dirs_if_necessary() {
     if [ $use_prefix_dir = yes ]; then
         return 0
     fi

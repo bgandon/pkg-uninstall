@@ -412,14 +412,30 @@ welcome. Few guidelines should be observed, though:
   cotext of your code (so that the name doesn't get too long).
 - Your functions should be short and do one thing.
 - Your code should include automated tests. Here we use the
-  [BATS](https://github.com/sstephenson/bats) technology.
+  [BATS][] technology.
 
+You'll also observe different conventions in main code, compared to
+test code.
+
+- Main code is developped following my own habits of portable shell
+  code. That's why it looks a bit old fashionned, because bashisms
+  constructs are avoided. Examples:
+    * Use `expr a : b >/dev/null` in favor of `[[ a =~ b ]]`
+    * Use back-ticks in favor of `$( ... )` (even though it disallows
+      nesting, which sometimes complicates things a little)
+    * Use `expr ...` in favor of `$(( ... ))`
+    * Avoid arrays and hashes (and thus use Perl instead)
+    * ...
+- Test code is [BATS][], so all bashisms are allowed there. Because it
+  must be run in Bash anyway.
 
 
 License
 -------
 
 `pkg-uninstall` is released under [the MIT License](LICENSE.txt).
+
+[BATS]: https://github.com/sstephenson/bats
 
 <!--
 # Local Variables:

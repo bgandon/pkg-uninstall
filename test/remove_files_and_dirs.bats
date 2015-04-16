@@ -7,7 +7,7 @@ load test-helpers
 load test-mocks
 
 # Mock
-load mock-list
+load mocks/list
 
 # Mock
 apply_cmd() {
@@ -29,7 +29,7 @@ apply_cmd() {
 
     # Then:
     mocks_fetch_args
-    [[ ${#args[@]} -eq 6 ]]
+    [ ${#args[@]} -eq 10 ]
     [ "${args[0]}" == files ]
     [ "${args[2]}" == com.example.plop.Pkg.ID ]
     [ "${args[4]}" == /pfx/dir ]
@@ -44,7 +44,7 @@ apply_cmd() {
     [ "${mocks_lines[3]}" == "rmdir /pfx/dir/${L1_F3}" ]
     [ "${mocks_lines[4]}" == "rmdir /pfx/dir/${L1_F2}" ]
     [ "${mocks_lines[5]}" == "rmdir /pfx/dir/${L1_F1}" ]
-    [ "$status" -eq 0 ]
+    [ $status -eq 0 ]
 }
 
 @test "should remove files, then dirs, in reverse package order, preserving wite spaces" {
@@ -65,7 +65,7 @@ apply_cmd() {
     [ "${mocks_lines[3]}" == "$(echo -e "rmdir /pfx\t/  dir/${L2_F3}")" ]
     [ "${mocks_lines[4]}" == "$(echo -e "rmdir /pfx\t/  dir/${L2_F2}")" ]
     [ "${mocks_lines[5]}" == "$(echo -e "rmdir /pfx\t/  dir/${L2_F1}")" ]
-    [ "$status" -eq 0 ]
+    [ $status -eq 0 ]
 }
 
 @test "should not actually remove files but just explain, when in dry-run mode" {
@@ -79,7 +79,7 @@ apply_cmd() {
 
     # Then:
     mocks_fetch_args
-    [[ ${#args[@]} -eq 6 ]]
+    [ ${#args[@]} -eq 10 ]
     [ "${args[0]}" == files ]
     [ "${args[2]}" == com.example.plop.Pkg.ID ]
     [ "${args[4]}" == /pfx/dir ]
@@ -94,7 +94,7 @@ apply_cmd() {
     [ "${lines[3]}" == "Would: rmdir /pfx/dir/${L1_F3}" ]
     [ "${lines[4]}" == "Would: rmdir /pfx/dir/${L1_F2}" ]
     [ "${lines[5]}" == "Would: rmdir /pfx/dir/${L1_F1}" ]
-    [ "$status" -eq 0 ]
+    [ $status -eq 0 ]
 }
 
 # Local Variables:

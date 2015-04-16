@@ -19,8 +19,8 @@ teardown() {
     rm_tmp "$TMP_DIR" functions.bash pkg-uninstall
 }
 
-assert_all_packages_are_installed_returns=0
-assert_can_infer_prefix_dirs_if_necessary_returns=0
+are_all_packages_installed_returns=0
+can_infer_prefix_dirs_if_necessary_returns=0
 compute_prefix_directory_returns=0
 validate_prefix_directory_returns=0
 remove_files_and_dirs_returns=0
@@ -29,13 +29,13 @@ forget_package_returns=0
 inject_mocks() {
     cat > "$TMP_DIR/functions.bash" <<EOF
 # Mock
-assert_all_packages_are_installed() {
-    return $assert_all_packages_are_installed_returns
+are_all_packages_installed() {
+    return $are_all_packages_installed_returns
 }
 
 # Mock
-assert_can_infer_prefix_dirs_if_necessary() {
-    return $assert_can_infer_prefix_dirs_if_necessary_returns
+can_infer_prefix_dirs_if_necessary() {
+    return $can_infer_prefix_dirs_if_necessary_returns
 }
 
 # Mock
@@ -68,7 +68,7 @@ EOF
 
 @test "should fail if any package is not already installed" {
     # Given
-    assert_all_packages_are_installed_returns=1
+    are_all_packages_installed_returns=1
     inject_mocks
 
     # When:
@@ -81,7 +81,7 @@ EOF
 
 @test "should fail if any prefix should be inferred but cannot" {
     # Given
-    assert_can_infer_prefix_dirs_if_necessary_returns=1
+    can_infer_prefix_dirs_if_necessary_returns=1
     inject_mocks
 
     # When:
