@@ -245,16 +245,16 @@ Several challenges would arise, then:
       requested to use the system API, though privileged files will
       still be trashed by the Finder
   - Features:
-	* Properly doesn’t follow leaf symlinks
+    * Properly doesn’t follow leaf symlinks
     * Properly shows only one authentication dialog
     * Properly supports multiple volumes trashes
     * Properly supports Finder's Undo and "Put Back" features,
       updating `~/.Trash/.DS_Store` accordingly
-	* Properly warns the user that when run as root, the items will go
+    * Properly warns the user that when run as root, the items will go
       to the trash of the root user, which might not be what the user
       expects
   - Caveats:
-	* Improperly prompts an inerrupting authentication dialog when
+    * Improperly prompts an inerrupting authentication dialog when
       trashing privileged files, which is not the spirit of any
       command-line tool
 
@@ -287,12 +287,12 @@ Several challenges would arise, then:
       to delete, which is slow
     * Improperly has the Finder prompt individual authentications,
       when deleting multiple privileged files.
-	* Does not delegate to Finder when run from a `screen` shell
+    * Does not delegate to Finder when run from a `screen` shell
       (which breaks support for Finder's Undo and "Put Back" and
       proper multiple volumes trashes)
-	* Improperly doesn't warn the user for items going to the trash of
+    * Improperly doesn't warn the user for items going to the trash of
       the root user, when run as root
-	* Improperly prompts inerrupting authentication dialogs when
+    * Improperly prompts inerrupting authentication dialogs when
       trashing privileged files, which is not the spirit of any
       command-line tool
 
@@ -308,7 +308,7 @@ Several challenges would arise, then:
     * Properly doesn’t follow “leaf” symbolic links
     * Properly doesn't clobber existing trashed files upon filename
       collision
-	* Properly doesn't prompt any inerrupting authentication dialog
+    * Properly doesn't prompt any inerrupting authentication dialog
       when trashing privileged files, and properly report any errors
       on `/dev/stderr` instead
   - Caveats:
@@ -332,7 +332,7 @@ Several challenges would arise, then:
       filename collision
     * Properly tries trashing all files even when encountering any
       error like inability to trash a privileged file
-	* Properly doesn't prompt any inerrupting authentication dialog
+    * Properly doesn't prompt any inerrupting authentication dialog
       when trashing privileged files, and properly report any errors
       on `/dev/stderr` instead
   - Caveats:
@@ -347,20 +347,20 @@ Several challenges would arise, then:
   - Source code: https://github.com/semaperepelitsa/osx-trash/blob/master/bin/trash
     * Written in Ruby
     * Uses AppleScript via Scripting Bridge on top of RubyCocoa
-	* Uses `SBApplication.applicationWithBundleIdentifier("com.apple.Finder").items.objectAtLocation(NSURL.fileURLWithPath(Pathname.new(file).realpath.to_s)).delete`
+    * Uses `SBApplication.applicationWithBundleIdentifier("com.apple.Finder").items.objectAtLocation(NSURL.fileURLWithPath(Pathname.new(file).realpath.to_s)).delete`
   - Features:
     * Properly supports Finder's Undo and "Put Back" features,
       updating `~/.Trash/.DS_Store` accordingly
   - Caveats:
     * Improperly follows leaf symbolic links
-	* Improperly prompts inerrupting authentication dialog when
+    * Improperly prompts inerrupting authentication dialog when
       trashing privileged files, which is not the spirit of any
       command-line tool
     * Improperly pops up many authentication dialogs, one for each
       file (due to a limitation in Scripting Bridge)
-	* Improperly doesn't warn the user for items going to the trash of
+    * Improperly doesn't warn the user for items going to the trash of
       the root user, when run as root
-	* Improperly provides no feedback about any errors, like failure
+    * Improperly provides no feedback about any errors, like failure
       to trash a privileged file, and always return success exit code
 
 * `osx-trash` by Sindre Sorhus
@@ -375,19 +375,19 @@ Several challenges would arise, then:
     * Written in Objective-C
     * Uses a plain `[[NSFileManager defaultManager] trashItemAtURL]`
       method call, that appeared in OS X v10.8
-	* Doesn't do anything fancy with symbolic links
+    * Doesn't do anything fancy with symbolic links
   - Features:
     * Properly supports Finder's
       ["Put Back"](http://mac-fusion.com/trash-tip-how-to-put-files-back-to-their-original-location/)
       features, updating `~/.Trash/.DS_Store` accordingly
     * ¿Properly doesn't dereference non-leaf symbolic links?
-	* ¿Properly doesn't prompt any inerrupting authentication dialog
+    * ¿Properly doesn't prompt any inerrupting authentication dialog
       when trashing privileged files?
   - Caveats:
-	* Improperly bails out when encountering a privileged files to
+    * Improperly bails out when encountering a privileged files to
       trash, leaving any remaining files (privileged or not) unchanged
     * ¿Improperly doesn't support Finder's Undo feature?
-	* Improperly doesn't warn the user for items going to the trash of
+    * Improperly doesn't warn the user for items going to the trash of
       the root user, when run as root
 
 * `rmtrash` by Night Productions
@@ -420,3 +420,9 @@ License
 -------
 
 `pkg-uninstall` is released under [the MIT License](LICENSE.txt).
+
+<!--
+# Local Variables:
+# indent-tabs-mode: nil
+# End:
+-->

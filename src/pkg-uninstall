@@ -12,25 +12,25 @@ cd `dirname "$0"`
 source functions.bash
 
 usage() {
-	echo "$SELF: usage: $SELF [options] <package-id> ..." >&2
-	echo "    Uninstall 'OS X Installer Packages' from the system." >&2
-	echo "    WARNING: this is a risky operation that can break your OS X installation." >&2
-	echo "    You are strongly advised to first make a backup copy of your system." >&2
-	echo >&2
-	echo "    --help              Display usage information" >&2
-	echo "    --version           Display version number" >&2
-	echo "    --dry-run           Explain what would happen, without modifying the system" >&2
-	echo "    --verbose           Be verbose about missing directories and files" >&2
-	echo "    --force             Bypass safeguards" >&2
-	echo "    --prefix-dir        Specify one single prefix directory for all packages" >&2
-	echo "    --infer-prefix-dir  Infer prefix directories instead of inpecting receipts" >&2
-	echo >&2
-	echo "    <package-id>        Identifiers of packages that are installed" >&2
+    echo "$SELF: usage: $SELF [options] <package-id> ..." >&2
+    echo "    Uninstall 'OS X Installer Packages' from the system." >&2
+    echo "    WARNING: this is a risky operation that can break your OS X installation." >&2
+    echo "    You are strongly advised to first make a backup copy of your system." >&2
+    echo >&2
+    echo "    --help              Display usage information" >&2
+    echo "    --version           Display version number" >&2
+    echo "    --dry-run           Explain what would happen, without modifying the system" >&2
+    echo "    --verbose           Be verbose about missing directories and files" >&2
+    echo "    --force             Bypass safeguards" >&2
+    echo "    --prefix-dir        Specify one single prefix directory for all packages" >&2
+    echo "    --infer-prefix-dir  Infer prefix directories instead of inpecting receipts" >&2
+    echo >&2
+    echo "    <package-id>        Identifiers of packages that are installed" >&2
 }
 
 if [ -z "$1" ]; then
-	usage
-	exit 2
+    usage
+    exit 2
 fi
 
 dry_run=no
@@ -43,80 +43,84 @@ do_infer_prefix_dir=no
 
 treat_args=yes
 while [ $treat_args = yes ]; do
-	case "$1" in
-		--help)
-			usage
-			exit 0
-			;;
-		--version)
-			echo "$SELF version $VERSION"
-			exit 0
-			;;
-		--dry-run)
-			dry_run=yes
-			shift
-			;;
-		--verbose)
-			be_verbose=yes
-			shift
-			;;
-		--force)
-			do_force=yes
-			shift
-			;;
-		--prefix-dir)
-			shift
-			prefix_dir="$1"
-			use_prefix_dir=yes
-			shift
-			;;
-		--prefix-dir=*)
-			prefix_dir=`echo "$1" | sed -e 's/^--prefix-dir=//'`
-			use_prefix_dir=yes
-			shift
-			;;
-		--infer-prefix-dir)
-			do_infer_prefix_dir=yes
-			shift
-			;;
-		*)
-			treat_args=stop
-			;;
-	esac
+    case "$1" in
+        --help)
+            usage
+            exit 0
+            ;;
+        --version)
+            echo "$SELF version $VERSION"
+            exit 0
+            ;;
+        --dry-run)
+            dry_run=yes
+            shift
+            ;;
+        --verbose)
+            be_verbose=yes
+            shift
+            ;;
+        --force)
+            do_force=yes
+            shift
+            ;;
+        --prefix-dir)
+            shift
+            prefix_dir="$1"
+            use_prefix_dir=yes
+            shift
+            ;;
+        --prefix-dir=*)
+            prefix_dir=`echo "$1" | sed -e 's/^--prefix-dir=//'`
+            use_prefix_dir=yes
+            shift
+            ;;
+        --infer-prefix-dir)
+            do_infer_prefix_dir=yes
+            shift
+            ;;
+        *)
+            treat_args=stop
+            ;;
+    esac
 done
 
 if ! assert_all_packages_are_installed "$@"; then
-	exit 1
+    exit 1
 fi
 if ! assert_can_infer_prefix_dirs_if_necessary "$@"; then
-	exit 1
+    exit 1
 fi
 
 final_exit_code=0
 for pkg in "$@"; do
-	echo "--> Uninstalling package '$pkg'"
+    echo "--> Uninstalling package '$pkg'"
 
-	prefix=`compute_prefix_directory "$pkg"`
-	if [ $? -ne 0 ]; then
-		final_exit_code=1
-		continue
-	fi
-	echo "    Prefix directory: $prefix"
+    prefix=`compute_prefix_directory "$pkg"`
+    if [ $? -ne 0 ]; then
+        final_exit_code=1
+        continue
+    fi
+    echo "    Prefix directory: $prefix"
 
-	if ! validate_prefix_directory "$pkg" "$prefix"; then
-		final_exit_code=1
-		continue
-	fi
+    if ! validate_prefix_directory "$pkg" "$prefix"; then
+        final_exit_code=1
+        continue
+    fi
 
-	remove_files_and_dirs "$pkg" "$prefix"
+    remove_files_and_dirs "$pkg" "$prefix"
 
-	if ! are_all_files_removed "$pkg" "$prefix"; then
-		echo "$SELF: keeping package definition '$pkg' because some files were not deleted." >&2
-		final_exit_code=1
-		continue
-	else
-		forget_package "$pkg"
-	fi
+    if ! are_all_files_removed "$pkg" "$prefix"; then
+        echo "$SELF: keeping package definition '$pkg' because some files were not deleted." >&2
+        final_exit_code=1
+        continue
+    else
+        forget_package "$pkg"
+    fi
 done
 
 exit $final_exit_code
+
+# Local Variables:
+# indent-tabs-mode: nil
+# End:
