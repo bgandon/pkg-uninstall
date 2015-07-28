@@ -96,9 +96,9 @@ Several options can be specified.
 
 `pkg-uninstall` supports files and directories that include blanks
 like spaces and tabs. But it does *not* supports new line (LF) and
-double quotes (") charaters in filenames. If run into such situation,
-then a rewrite in Perl or any similar language would be necessary to
-obtain the required robustness.
+double quotes (") charaters in filenames. If you run into such
+situation, then a rewrite in Perl (or any similar language) will be
+necessary to obtain the required robustness.
 
 
 Further Documentation
@@ -409,7 +409,7 @@ welcome. Few guidelines should be observed, though:
 - Your variable names should describe well the data they hold, in the
   context of what your code is doing.
 - Your function names should properly describe what they do, in the
-  cotext of your code (so that the name doesn't get too long).
+  context of your code (so that the name doesn't get too long).
 - Your functions should be short and do one thing.
 - Your code should include automated tests. Here we use the
   [BATS][] technology.
