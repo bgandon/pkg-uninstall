@@ -194,6 +194,13 @@ indexed.
 * [hewigovens/PackageUninstaller](https://github.com/hewigovens/PackageUninstaller)
 * [Uninstalling .pkg files on OSX](http://en.newinstance.it/2010/04/21/uninstalling-pkg-files-on-osx/)
 * [The “Packages” (app) resources](http://s.sudre.free.fr/Software/Packages/resources.html)
+* [Uninstalling packages (.pkg files) on Mac OS X](https://wincent.com/wiki/Uninstalling_packages_%28.pkg_files%29_on_Mac_OS_X)
+* [OSX Packages Uninstaller by Michal Papis](https://github.com/mpapis/pkg_uninstaller)
+* [osx-pkg-uninstall.sh from radare2](https://github.com/radare/radare2/blob/master/sys/osx-pkg-uninstall.sh)
+
+### Similar Commercial Tools
+
+* [UninstallPKG](https://www.corecode.at/uninstallpkg/)
 
 
 Contributing
