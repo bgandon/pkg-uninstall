@@ -150,7 +150,7 @@ To browse the install history, just run:
 And if you need to inspect the receipts database further:
 
     ls /var/db/receipts
-    plist -p /var/db/receipts/<package-id>.plist
+    plutil -p /var/db/receipts/<package-id>.plist
     defaults read /var/db/receipts/<package-id>.plist InstallPrefixPath
 
 
