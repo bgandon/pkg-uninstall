@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Pkg-uninstall by bgandon</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Pkg-uninstall</h1>
+          <h2>Safely uninstall your OS X packages from the command line</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/bgandon/pkg-uninstall/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/bgandon/pkg-uninstall/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/bgandon/pkg-uninstall" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="os-x-package-uninstaller" class="anchor" href="#os-x-package-uninstaller" aria-hidden="true"><span class="octicon octicon-link"></span></a>OS X Package Uninstaller</h1>
+
+<p>by Benjamin Gandon © 2015</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p><code>pkg-uninstall</code> is a command line tool that helps in uninstalling OS X
+packages.</p>
+
+<p>Several safe-guards are implemented in <code>pkg-uninstall</code> to ensure that
+the uninstallation process is somehow kept under control. But it will
+not prevent you from doing silly things like uninstalling core
+packages that are vital to your OS X system and applications.</p>
+
+<p>This is inherent to OS X Packages. Thus, you are strongly advised to
+make a backup copy of your system prior to using <code>pkg-uninstall</code>. Go
+and setup <a href="https://support.apple.com/HT201250">Time Machine</a> for that.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>General usage form is:</p>
+
+<pre><code>pkg-uninstall [options] &lt;package-id&gt; ...
+</code></pre>
+
+<p>Where package identifiers are to be found in the list of installed
+packages, as returned by <code>pkgutil --pkgs</code>.</p>
+
+<p>So you should first make a backup copy of your system. Then, you
+should dry run <code>pkg-uninstall</code> with standard user privileges and the
+<code>--dry-run</code> option:</p>
+
+<pre><code>pkg-uninstall --dry-run &lt;package-id&gt;
+</code></pre>
+
+<p>With this, you'll see what would happen, without actually changing
+anything to the system.</p>
+
+<p>Once you're really sure of what you're doing, you might finally run:</p>
+
+<pre><code>sudo pkg-uninstall &lt;package-id&gt;
+</code></pre>
+
+<h3>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<p>Several options can be specified.</p>
+
+<ul>
+<li><p><code>--help</code>: display usage informationdisplay usage information.</p></li>
+<li><p><code>--version</code>: display version number.</p></li>
+<li><p><code>--dry-run</code> (highly recommended for a first use): Explain what would
+happen during the uninstallation, without actually modifying the
+system. When running the tool with this option, you don't need
+superuser privileges.</p></li>
+<li><p><code>--verbose</code>: be verbose about directories and files that are listed
+as part of the installed package, but that cannot be actually found
+in the file system.</p></li>
+<li><p><code>--force</code>: force uninstallation, even if some directories or some
+files are actually missing on the file system. This just bypasses
+safeguards that have the tool stop early in the process. It does not
+enforce any operations that are prevented by <code>--dry-run</code>.</p></li>
+<li><p><code>--prefix-dir</code>: specify one single installation prefix directory for
+all packages to uninstall, instead of fetching their individual
+<code>InstallPrefixPath</code> values that are stored in the receipts
+database. Package directories and files will have this directory
+prepended before tring to remove them from the file system. Both
+<code>--prefix-dir=&lt;dir&gt;</code> and <code>--prefix-dir &lt;dir&gt;</code> syntaxes are
+supported.</p></li>
+<li><p><code>--infer-prefix-dir</code>: for each package to uninstall, do not use the
+<code>InstallPrefixPath</code> value, but infer a suitable directory
+instead. This might take a long time to run. See below for more
+details.</p></li>
+</ul>
+
+<h3>
+<a id="safeguards" class="anchor" href="#safeguards" aria-hidden="true"><span class="octicon octicon-link"></span></a>Safeguards</h3>
+
+<ul>
+<li><p>Check that all specified packages are listed as installed before
+proceeding. Stop with failure message if one of them is not.</p></li>
+<li><p>Check that the directories and files (that are listed as part of the
+packages) are actually present on the file system, taking any
+installation prefix directory into account. Report any issue about
+that (with details when <code>--verbose</code>). Advise the user to <code>--force</code>
+uninstallation to proceed any further.</p></li>
+</ul>
+
+<h3>
+<a id="caveats" class="anchor" href="#caveats" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caveats</h3>
+
+<p><code>pkg-uninstall</code> supports files and directories that include blanks
+like spaces and tabs. But it does <em>not</em> supports new line (LF) and
+double quotes (") charaters in filenames. If you run into such
+situation, then a rewrite in Perl (or any similar language) will be
+necessary to obtain the required robustness.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><code>pkg-uninstall</code> is released under <a href="LICENSE.txt">the MIT License</a>.</p>
+
+
+        </section>
+
+        <footer>
+          Pkg-uninstall is maintained by <a href="https://github.com/bgandon">bgandon</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
