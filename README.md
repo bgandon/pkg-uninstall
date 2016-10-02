@@ -1,4 +1,4 @@
-OS X Package Uninstaller [![.](http://gaproxy.gstack.io/UA-68445280-1/github.com/bgandon/pkg-uninstall/readme?pixel)](https://github.com/gstackio/ga-beacon)
+OS X Package Uninstaller [![.](http://gaproxy.gstack.io/UA-68445280-1/bgandon/pkg-uninstall/readme?pixel&dh=github.com)](https://github.com/gstackio/ga-beacon)
 ========================
 
 by Benjamin Gandon © 2015
