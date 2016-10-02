@@ -248,7 +248,3 @@ License
 # indent-tabs-mode: nil
 # End:
 -->
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/bgandon/pkg-uninstall/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
