@@ -1,5 +1,7 @@
 #!/bin/sh
 
+unset GREP_OPTIONS
+
 # --------------------------------- #
 # GENERAL PURPOSE UTILITY FUNCTIONS #
 # --------------------------------- #
