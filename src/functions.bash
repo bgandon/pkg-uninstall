@@ -235,10 +235,15 @@ validate_existing() {
 
     non_existing_count=`expr "$total_count" - "$existing_count"`
     if [ "$non_existing_count" -gt 0 ]; then
-        echo "$SELF: ERROR: $non_existing_count $type (out of $total_count in package '$pkg') cannot be found from prefix directory '$prefix'." \
-             "Please use --verbose to list them." \
-             "Please use --force to uninstall anyway. Aborting." >&2
-        return 1
+        if [ $do_force != yes ]; then
+            echo "$SELF: ERROR: $non_existing_count $type (out of $total_count in package '$pkg') cannot be found from prefix directory '$prefix'." \
+                 "Please use --verbose to list them." \
+                 "Please use --force to uninstall anyway. Aborting." >&2
+            return 1
+        else
+            echo "$SELF: WARN: $non_existing_count $type (out of $total_count in package '$pkg') cannot be found from prefix directory '$prefix'." \
+                 "Continuing anyway because --force is specified." >&2
+        fi
     fi
     return 0
 }
