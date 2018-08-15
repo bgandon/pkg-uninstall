@@ -209,14 +209,13 @@ Contributing
 [Pull requests](http://help.github.com/send-pull-requests) are
 welcome. Few guidelines should be observed, though:
 
-- Your code should not break existing tests. Check this with `bats
-  ./test`
-- Your code should be easy to read.
-- Your variable names should describe well the data they hold, in the
-  context of what your code is doing.
-- Your function names should properly describe what they do, in the
-  context of your code (so that the name doesn't get too long).
-- Your functions should be short and do one thing.
+- New code should not break existing tests. Check this with `bats ./test`
+- Code should be easy to read.
+- Variable names should describe well the data they hold, in the context of
+  what your code is doing.
+- Function names should properly describe what they do, in the context of your
+  code (so that the name doesn't get too long).
+- Functions should be short and do one thing.
 - Your code should include automated tests. Here we use the
   [BATS][] technology.
 
