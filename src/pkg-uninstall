@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=1.0.0
+VERSION=1.1.0
 
 # Euristics constants:
 VOTERS_MIN_PATH_ELEMS=3
